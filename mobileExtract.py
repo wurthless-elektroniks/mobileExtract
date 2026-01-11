@@ -60,7 +60,8 @@ def find_and_dump_mobiles(max_pages: int,
                           is_big_block: bool,
                           spr: bytes,
                           pag: bytes):
-    
+
+    # id 0x30 is fsroot by the way... but we're not dumping the filesystem in this tool.
     for i in range(0x31, 0x3F):
         block_offset = find_mobile_block(max_pages, i, is_big_block, spr)
         if block_offset == 0:
