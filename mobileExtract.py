@@ -26,18 +26,24 @@ def find_mobile_block(max_pages: int,
     while i < max_pages:
         spr_offset = i * 0x10
 
-        # this looks extremely weird, but the mobile pages do NOT use the standard ECC codes.
+        # this looks odd if you assumed that the ECC field is 32 bits. but it's not.
+        # the ECC field is 26 bits, leaving 6 bits free for some sort of metadata,
+        # and in this case the settings blobs use it to identify themselves.
         if spr[spr_offset + 0x0C] & 0x3F == mobile_id:
+            
+            # seems to be looking for the most recent version of the settings blob
             uVar1 = None
             if is_big_block:
                 uVar1 = struct.unpack("<I", spr[spr_offset+0x3:spr_offset+0x7])[0] & 0x00FFFFFF
             else:
                 uVar1 = struct.unpack("<I", spr[spr_offset+0x2:spr_offset+0x6])[0] & 0x00FFFFFF
 
+            # because, if we found a newer version, we use that instead
             if local_1c < uVar1:
                 local_10 = i
                 local_1c = uVar1
 
+            # grab size and advance past it (in terms of pages)
             uVar2 = struct.unpack("<H", spr[spr_offset+0x07:spr_offset+0x09])[0]
             if (uVar2 >> 9) < 4:
                 i += 4
