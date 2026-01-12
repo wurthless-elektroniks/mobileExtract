@@ -62,6 +62,11 @@ def find_and_dump_mobiles(max_pages: int,
                           pag: bytes):
 
     # id 0x30 is fsroot by the way... but we're not dumping the filesystem in this tool.
+    #
+    # special types not covered here:
+    # 0x30 - fsroot on small block systems
+    # 0x2A - filesystem data on big blocks
+    # 0x2C - fsroot on big block systems
     for i in range(0x31, 0x3F):
         block_offset = find_mobile_block(max_pages, i, is_big_block, spr)
         if block_offset == 0:
