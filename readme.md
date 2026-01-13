@@ -16,5 +16,7 @@ It is buggy as hell, doesn't handle bad blocks correctly, and doesn't support eM
 - mobileExtract.py is a rewrite of the code in Python which makes it a lot cleaner, and more importantly allows it
   to be cross-platform.
 
+- mobileExtractEmmc.py is my attempt of writing an eMMC version of the tool. No idea how accurate it is though...
+
 About correctness: I don't know if this is 100% accurate yet. Might have to run this against the original tool
 on Windows and also to see if I can grab the MobileX.dat files off real hardware (using a filemanager like Aurora)...
